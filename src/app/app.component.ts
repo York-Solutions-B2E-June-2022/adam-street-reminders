@@ -13,16 +13,19 @@ export class AppComponent {
       date: new Date(),
       text: "take out trash",
       isEditing: false,
+      isFinished: true,
     },
     {
       date: new Date(),
       text: "wash car",
       isEditing: true,
+      isFinished: false,
     },
     {
       date: new Date(),
       text: "make lunch",
       isEditing: false,
+      isFinished: false,
     }
   ]
 

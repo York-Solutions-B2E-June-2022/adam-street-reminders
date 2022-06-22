@@ -10,12 +10,23 @@
     <ng-template #viewDate>
       <div>{{reminder.date | date}}</div>
     </ng-template>
+
+    <div *ngIf="reminder.isEditing; then finishedEdit; else finishedView"></div>
+    <ng-template #finishedEdit>
+      <label>
+        Finished:
+        <input [(ngModel)]="reminder.isFinished" type="checkbox">
+      </label>
+    </ng-template>
+    <ng-template #finishedView>
+      <div>{{reminder.isFinished ? "Finished" : "Todo"}}</div>
+    </ng-template>
   </div>
 
   <div class="content">
 
-<!--    <div *ngIf="!reminder.isEditing">{{reminder.text}}</div>-->
-<!--    <input *ngIf="reminder.isEditing"/>-->
+    <!--    <div *ngIf="!reminder.isEditing">{{reminder.text}}</div>-->
+    <!--    <input *ngIf="reminder.isEditing"/>-->
 
     <div *ngIf="reminder.isEditing; then editContent; else viewContent;"></div>
     <ng-template #editContent>
