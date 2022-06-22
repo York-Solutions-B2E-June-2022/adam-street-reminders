@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="header">
+    <div *ngIf="reminder.isEditing; then editDate; else viewDate;"></div>
+    <ng-template #editDate>
+      <input type="date"
+             [ngModel]="reminder.date | date : 'yyyy-MM-dd'"
+             (ngModelChange)="onDateChange($event)"
+      />
+    </ng-template>
+    <ng-template #viewDate>
+      <div>{{reminder.date | date}}</div>
+    </ng-template>
+  </div>
+
+  <div class="content">
+
+<!--    <div *ngIf="!reminder.isEditing">{{reminder.text}}</div>-->
+<!--    <input *ngIf="reminder.isEditing"/>-->
+
+    <div *ngIf="reminder.isEditing; then editContent; else viewContent;"></div>
+    <ng-template #editContent>
+      <input type="text" [(ngModel)]="reminder.text"/>
+    </ng-template>
+    <ng-template #viewContent>
+      {{reminder.text}}
+    </ng-template>
+
+  </div>
+
+  <div class="footer">
+    <button *ngIf="!reminder.isEditing" (click)="onEditClick()">edit</button>
+    <button *ngIf="reminder.isEditing" (click)="saveEdit()">save</button>
+  </div>
+
+</div>
