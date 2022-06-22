@@ -7,4 +7,25 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'reminders';
+
+  reminderList = [
+    {
+      date: new Date(),
+      text: "take out trash",
+      isEditing: false,
+    },
+    {
+      date: new Date(),
+      text: "wash car",
+      isEditing: true,
+    },
+    {
+      date: new Date(),
+      text: "make lunch",
+      isEditing: false,
+    }
+  ]
+
+  constructor() {
+  }
 }
