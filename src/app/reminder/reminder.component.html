@@ -1,25 +1,25 @@
 <div class="container">
   <div class="header">
-    <div *ngIf="reminder.isEditing; then editDate; else viewDate;"></div>
+    <div *ngIf="displayReminder.isEditing; then editDate; else viewDate;"></div>
     <ng-template #editDate>
       <input type="date"
-             [ngModel]="reminder.date | date : 'yyyy-MM-dd'"
+             [ngModel]="displayReminder.date | date : 'yyyy-MM-dd'"
              (ngModelChange)="onDateChange($event)"
       />
     </ng-template>
     <ng-template #viewDate>
-      <div class="date">{{reminder.date | date}}</div>
+      <div class="date">{{displayReminder.date | date}}</div>
     </ng-template>
 
-    <div *ngIf="reminder.isEditing; then finishedEdit; else finishedView"></div>
+    <div *ngIf="displayReminder.isEditing; then finishedEdit; else finishedView"></div>
     <ng-template #finishedEdit>
       <label>
         Finished:
-        <input [(ngModel)]="reminder.isFinished" type="checkbox">
+        <input [(ngModel)]="displayReminder.isFinished" type="checkbox">
       </label>
     </ng-template>
     <ng-template #finishedView>
-      <div class="finished">{{reminder.isFinished | finishedText }}</div>
+      <div class="finished">{{displayReminder.isFinished | finishedText }}</div>
     </ng-template>
   </div>
 
@@ -28,19 +28,20 @@
     <!--    <div *ngIf="!reminder.isEditing">{{reminder.text}}</div>-->
     <!--    <input *ngIf="reminder.isEditing"/>-->
 
-    <div *ngIf="reminder.isEditing; then editContent; else viewContent;"></div>
+    <div *ngIf="displayReminder.isEditing; then editContent; else viewContent;"></div>
     <ng-template #editContent>
-      <input type="text" [(ngModel)]="reminder.text"/>
+      <input type="text" [(ngModel)]="displayReminder.text"/>
     </ng-template>
     <ng-template #viewContent>
-      {{reminder.text}}
+      {{displayReminder.text}}
     </ng-template>
 
   </div>
 
   <div class="footer">
-    <button *ngIf="!reminder.isEditing" (click)="onEditClick()">edit</button>
-    <button *ngIf="reminder.isEditing" (click)="saveEdit()">save</button>
+    <button *ngIf="!displayReminder.isEditing" (click)="onEditClick()">edit</button>
+    <button *ngIf="displayReminder.isEditing" (click)="saveEdit()">save</button>
+    <button *ngIf="displayReminder.isEditing" (click)="cancelEdit()">cancel</button>
     <button (click)="onDelete()">delete</button>
   </div>
 

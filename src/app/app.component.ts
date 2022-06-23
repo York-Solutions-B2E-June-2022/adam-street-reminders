@@ -1,51 +1,46 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import {DatePipe} from "@angular/common";
+import {IReminder} from "./interfaces/IReminder";
+import {DataService} from "./data.service";
+import {Subscription, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'reminders';
+export class AppComponent implements OnDestroy{
+  searchText: string = "";
+  displayList: Array<IReminder> = []
+  reminderListSub: Subscription;
 
-  searchText = "";
-  reminderList: Array<any> = []
-  displayList: Array<any> = []
+  constructor(private datePipe: DatePipe, private dataService: DataService) {
+    this.displayList = [...this.dataService.reminderList]
+    this.reminderListSub = dataService.reminderList$.subscribe(
+      (newList) => this.displayList = newList
+    )
+  }
 
-  constructor(private datePipe: DatePipe) {}
+  ngOnDestroy() {
+    this.reminderListSub.unsubscribe();
+  }
 
   createMemo() {
-    this.reminderList.push({
-      id: uuidv4(),
-      date: new Date(),
-      text: "",
-      isEditing: true,
-      isFinished: false,
-    })
-
-    this.buildDisplayList();
+    this.dataService.createMemo()
   }
 
-  onSearch(searchText: string) {
+  onSearch(searchText: string): void {
     this.searchText = searchText;
-    this.buildDisplayList();
   }
 
-  onDelete(reminderToDelete: any) {
-    this.reminderList = this.reminderList.filter(
-      (reminder) => { return reminder.id !== reminderToDelete.id }
-    )
-    this.buildDisplayList();
-  }
 
-  buildDisplayList() {
-    this.displayList = this.reminderList.filter(
-      (reminder) => {
-        const dateString = this.datePipe.transform(reminder.date);
-        return reminder.text.includes(this.searchText) || dateString?.toUpperCase().includes(this.searchText.toUpperCase())
-      }
-    )
-  }
+  // buildDisplayList(): void {
+  //   this.displayList = this.reminderList.filter(
+  //     (reminder) => {
+  //       const dateString = this.datePipe.transform(reminder.date);
+  //       return reminder.text.includes(this.searchText) || dateString?.toUpperCase().includes(this.searchText.toUpperCase())
+  //     }
+  //   )
+  // }
 }

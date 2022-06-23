@@ -1,35 +1,43 @@
-import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {IReminder} from "../interfaces/IReminder";
+import {DataService} from "../data.service";
+
 
 @Component({
   selector: 'app-reminder',
   templateUrl: './reminder.component.html',
   styleUrls: ['./reminder.component.css']
 })
-export class ReminderComponent implements OnInit {
+export class ReminderComponent implements OnInit{
 
-  @Input() reminder: any;
-  @Output() onDeleteEvent = new EventEmitter();
+  @Input() reminder!: IReminder;
+  displayReminder!: IReminder;
 
-  constructor() {
+  constructor(private dataService: DataService) {
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.displayReminder = {...this.reminder};
   }
 
-  onEditClick() {
-    this.reminder.isEditing = true;
+  onEditClick(): void {
+    this.displayReminder.isEditing = true;
   }
 
-  saveEdit() {
-    this.reminder.isEditing = false;
+  saveEdit(): void{
+    this.displayReminder.isEditing = false;
+    this.dataService.onUpdate(this.displayReminder);
   }
 
-  onDateChange(date: any) {
-    this.reminder.date = new Date(date + " 00:00:00");
+  onDateChange(date: string): void {
+    this.displayReminder.date = new Date(date + " 00:00:00");
   }
 
-  onDelete() {
-    console.log(this.reminder)
-    this.onDeleteEvent.emit(this.reminder)
+  onDelete(): void {
+    this.dataService.onDelete(this.reminder);
+  }
+
+  cancelEdit() {
+    this.displayReminder = {...this.reminder}
   }
 }

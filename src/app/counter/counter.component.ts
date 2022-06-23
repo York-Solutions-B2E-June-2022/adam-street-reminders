@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {DataService} from "../data.service";
 
 @Component({
   selector: 'app-counter',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CounterComponent implements OnInit {
   count = 0;
+  dataServiceName: string = ";"
 
   onClick() {
     this.count += 1;
@@ -16,7 +18,8 @@ export class CounterComponent implements OnInit {
     this.count = 0;
   }
 
-  constructor() { }
+  constructor(private dataService: DataService) {
+  }
 
   ngOnInit(): void {
   }
