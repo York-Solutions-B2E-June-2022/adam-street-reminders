@@ -13,13 +13,23 @@
   justify-content: space-between;
 }
 
+.header > .date {
+  /*margin: 2rem;*/
+}
+
+.header > .finished{
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*justify-content: center;*/
+}
+
 .content {
   padding: 1rem;
 }
 
 .footer {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
   background-color: gainsboro;
   padding: 0.5rem;
 }

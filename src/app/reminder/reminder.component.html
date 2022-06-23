@@ -8,7 +8,7 @@
       />
     </ng-template>
     <ng-template #viewDate>
-      <div>{{reminder.date | date}}</div>
+      <div class="date">{{reminder.date | date}}</div>
     </ng-template>
 
     <div *ngIf="reminder.isEditing; then finishedEdit; else finishedView"></div>
@@ -19,7 +19,7 @@
       </label>
     </ng-template>
     <ng-template #finishedView>
-      <div>{{reminder.isFinished ? "Finished" : "Todo"}}</div>
+      <div class="finished">{{reminder.isFinished ? "Finished" : "Todo"}}</div>
     </ng-template>
   </div>
 
@@ -41,6 +41,7 @@
   <div class="footer">
     <button *ngIf="!reminder.isEditing" (click)="onEditClick()">edit</button>
     <button *ngIf="reminder.isEditing" (click)="saveEdit()">save</button>
+    <button (click)="onDelete()">delete</button>
   </div>
 
 </div>

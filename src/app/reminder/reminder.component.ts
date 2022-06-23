@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-reminder',
@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class ReminderComponent implements OnInit {
 
   @Input() reminder: any;
+  @Output() onDeleteEvent = new EventEmitter();
 
   constructor() {
   }
@@ -25,5 +26,10 @@ export class ReminderComponent implements OnInit {
 
   onDateChange(date: any) {
     this.reminder.date = new Date(date + " 00:00:00");
+  }
+
+  onDelete() {
+    console.log(this.reminder)
+    this.onDeleteEvent.emit(this.reminder)
   }
 }
