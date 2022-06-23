@@ -19,7 +19,7 @@
       </label>
     </ng-template>
     <ng-template #finishedView>
-      <div class="finished">{{reminder.isFinished ? "Finished" : "Todo"}}</div>
+      <div class="finished">{{reminder.isFinished | finishedText }}</div>
     </ng-template>
   </div>
 

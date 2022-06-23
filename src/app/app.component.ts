@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,8 @@ export class AppComponent {
   searchText = "";
   reminderList: Array<any> = []
   displayList: Array<any> = []
+
+  constructor(private datePipe: DatePipe) {}
 
   createMemo() {
     this.reminderList.push({
@@ -40,15 +43,9 @@ export class AppComponent {
   buildDisplayList() {
     this.displayList = this.reminderList.filter(
       (reminder) => {
-        return reminder.text.includes(this.searchText)
+        const dateString = this.datePipe.transform(reminder.date);
+        return reminder.text.includes(this.searchText) || dateString?.toUpperCase().includes(this.searchText.toUpperCase())
       }
     )
-  }
-
-
-  constructor() {
-    // this.createMemo()
-    // this.createMemo()
-    // this.createMemo()
   }
 }
